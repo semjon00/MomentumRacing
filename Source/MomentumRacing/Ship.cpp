@@ -2,6 +2,8 @@
 
 
 #include "MomentumRacing.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Engine/CollisionProfile.h"
 #include "Ship.h"
 
 #define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::White,text)
@@ -9,6 +11,9 @@
 // Sets default values
 AShip::AShip()
 {
+	//static ConstructorHelpers::FObjectFinder<UObject> physMatHelper(TEXT("PhysicalMaterial'/Engine/EngineMaterials/PhysMat_Ice.PhysMat_Ice'"));
+	//physMat = (UPhysicalMaterial*) physMatHelper.Object;
+	
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -21,13 +26,20 @@ AShip::AShip()
 	OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
 	OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
 	OurVisibleComponent->SetupAttachment(RootComponent);
+	OurVisibleComponent->BodyInstance.SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
+	OurVisibleComponent->SetNotifyRigidBodyCollision(true);
+	OurVisibleComponent->SetSimulatePhysics(true);
+
+	TurnTorque = 500000.0f;
+	AccelerationForce = 25000.0f;
 }
 
 // Called when the game starts or when spawned
 void AShip::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
+
+	//OurVisibleComponent->SetMaterial(0, physMat);
 }
 
 // Called every frame
@@ -54,10 +66,13 @@ void AShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AShip::MoveForward(float Value)
 {
-	CurrentVelocity.X = FMath::Clamp(Value, -1.0f, 1.0f) * 300.0f;
+	FVector Rotation = OurVisibleComponent->GetComponentRotation().Vector();
+	const FVector Force = Rotation * Value * AccelerationForce;
+	OurVisibleComponent->AddForce(Force);
 }
 
 void AShip::MoveRight(float Value)
 {
-	CurrentVelocity.Y = FMath::Clamp(Value, -1.0f, 1.0f) * 300.0f;
+	const FVector Torque = FVector(0.0f, 0.0f, Value * TurnTorque);
+	OurVisibleComponent->AddTorqueInRadians(Torque);
 }

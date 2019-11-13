@@ -28,6 +28,12 @@ public:
 	// Sets default values for this pawn's properties
 	AShip();
 
+	UPROPERTY(EditAnywhere)
+	float TurnTorque;
+
+	UPROPERTY(EditAnywhere)
+	float AccelerationForce;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -40,7 +46,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere)
-	USceneComponent* OurVisibleComponent;
+	UStaticMeshComponent* OurVisibleComponent;
+
+	//UPROPERTY(EditAnywhere)
+	//class UPhysicalMaterial* physMat;
 
 	void MoveForward(float Value);
 
