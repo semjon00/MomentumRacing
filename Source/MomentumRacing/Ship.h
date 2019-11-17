@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "Components/StaticMeshComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
-#include "Components/InputComponent.h"
 #include "Ship.generated.h"
+
+class UStaticMeshComponent;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class MOMENTUMRACING_API AShip : public APawn
@@ -16,13 +16,13 @@ class MOMENTUMRACING_API AShip : public APawn
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* SpringArm;
+	USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* Camera;
+	UCameraComponent* Camera;
 
 public:
 	// Sets default values for this pawn's properties
@@ -45,8 +45,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* OurVisibleComponent;
+	//UPROPERTY(EditAnywhere)
+	//UStaticMeshComponent* OurVisibleComponent;
 
 	//UPROPERTY(EditAnywhere)
 	//class UPhysicalMaterial* physMat;
