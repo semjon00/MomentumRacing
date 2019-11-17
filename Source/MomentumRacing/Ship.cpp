@@ -50,7 +50,7 @@ AShip::AShip()
 	TurnTorque = 7500000.0f;
 	AccelerationForce = 100000.0f;
 	BoostForce = 4 * AccelerationForce;
-	BrakeMultiplier = BoostForce;
+	BrakeForce = BoostForce;
 }
 
 // Called when the game starts or when spawned
@@ -76,7 +76,7 @@ void AShip::Tick(float DeltaTime)
 	if (IsBrake)
 	{
 		const FVector Speed = Mesh->GetPhysicsLinearVelocity();
-		const FVector Force = -Speed * BrakeMultiplier / Speed.Size();
+		const FVector Force = -Speed * BrakeForce / Speed.Size();
 		Mesh->AddForce(Force);
 	}
 
@@ -103,6 +103,7 @@ void AShip::MoveForward(float Value)
 
 void AShip::MoveRight(float Value)
 {
+	Value = FMath::Clamp(Value, -1.0f, 1.0f);
 	const FVector Torque = FVector(0.0f, 0.0f, Value * TurnTorque);
 	Mesh->AddTorqueInRadians(Torque);
 	//UE_LOG(LogTemp, Display, TEXT("Added %s torque"), *Torque.ToString());

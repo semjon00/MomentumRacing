@@ -38,7 +38,7 @@ public:
 	float BoostForce;
 
 	UPROPERTY(EditAnywhere)
-	float BrakeMultiplier;
+	float BrakeForce;
 
 protected:
 	// Called when the game starts or when spawned
