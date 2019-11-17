@@ -49,6 +49,8 @@ AShip::AShip()
 
 	TurnTorque = 7500000.0f;
 	AccelerationForce = 100000.0f;
+	BoostForce = 4 * AccelerationForce;
+	BrakeMultiplier = BoostForce;
 }
 
 // Called when the game starts or when spawned
@@ -63,15 +65,20 @@ void AShip::BeginPlay()
 void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	if (IsBoost)
+	{
+		const FVector Rotation = Mesh->GetComponentRotation().Vector();
+		FVector Force = BoostForce * Rotation;
+		Mesh->AddForce(Force);
+	}
 
-	//{
-	//	UE_LOG(LogTemp, Display, TEXT("CurrentVelocity is %s"), *CurrentVelocity.ToString());
-	//	if (!CurrentVelocity.IsZero())
-	//	{
-	//		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
-	//		SetActorLocation(NewLocation);
-	//	}
-	//}
+	if (IsBrake)
+	{
+		const FVector Speed = Mesh->GetPhysicsLinearVelocity();
+		const FVector Force = -Speed * BrakeMultiplier / Speed.Size();
+		Mesh->AddForce(Force);
+	}
 
 }
 
@@ -80,6 +87,10 @@ void AShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	PlayerInputComponent->BindAxis("MoveForward", this, &AShip::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AShip::MoveRight);
+	PlayerInputComponent->BindAction("Boost", IE_Pressed, this, &AShip::StartBoosting);
+	PlayerInputComponent->BindAction("Boost", IE_Released, this, &AShip::StopBoosting);
+	PlayerInputComponent->BindAction("Brake", IE_Pressed, this, &AShip::StartBraking);
+	PlayerInputComponent->BindAction("Brake", IE_Released, this, &AShip::StopBraking);
 }
 
 void AShip::MoveForward(float Value)
@@ -96,3 +107,24 @@ void AShip::MoveRight(float Value)
 	Mesh->AddTorqueInRadians(Torque);
 	//UE_LOG(LogTemp, Display, TEXT("Added %s torque"), *Torque.ToString());
 }
+
+void AShip::StartBoosting()
+{
+	IsBoost = true;
+}
+
+void AShip::StopBoosting()
+{
+	IsBoost = false;
+}
+
+void AShip::StartBraking()
+{
+	IsBrake = true;
+}
+
+void AShip::StopBraking()
+{
+	IsBrake = false;
+}
+

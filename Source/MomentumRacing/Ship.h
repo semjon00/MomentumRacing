@@ -34,6 +34,12 @@ public:
 	UPROPERTY(EditAnywhere)
 	float AccelerationForce;
 
+	UPROPERTY(EditAnywhere)
+	float BoostForce;
+
+	UPROPERTY(EditAnywhere)
+	float BrakeMultiplier;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -55,6 +61,18 @@ public:
 
 	void MoveRight(float Value);
 
+	void StartBoosting();
+
+	void StopBoosting();
+
+	void StartBraking();
+
+	void StopBraking();
+
 	FVector CurrentVelocity;
+
+	bool IsBoost;
+
+	bool IsBrake;
 
 };
