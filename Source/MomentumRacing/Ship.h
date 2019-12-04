@@ -40,6 +40,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	float BrakeForce;
 
+	UPROPERTY(EditAnywhere)
+	float RegularTopSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float BoostTopSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float MaxAngularVelocity;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
