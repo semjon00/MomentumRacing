@@ -49,6 +49,7 @@ void AShip::BeginPlay()
 {
 	Super::BeginPlay();	
 
+	SetHUDWidget(HUDWidgetClass);
 	GetWorld()->GetTimerManager().SetTimer(BoostHandle, this, &AShip::AlterBoost, 0.25f, true);
 }
 
@@ -152,5 +153,27 @@ void AShip::AlterBoost()
 		}
 	}
 	print("Boost: " + FString::FromInt(Boost));
+}
+
+void AShip::SetHUDWidget(TSubclassOf<UUserWidget> HUDWidgetClass)
+{
+	if (CurrentWidget != nullptr)
+	{
+		CurrentWidget->RemoveFromViewport();
+		CurrentWidget = nullptr;
+	}
+	if (HUDWidgetClass != nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetClass);
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
+	}
+}
+
+float AShip::GetBoost()
+{
+	return Boost;
 }
 
