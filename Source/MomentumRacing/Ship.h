@@ -49,6 +49,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxAngularVelocity;
 
+	UPROPERTY(EditAnywhere)
+	float Boost;
+
+	FTimerHandle BoostHandle;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -59,12 +64,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	//UPROPERTY(EditAnywhere)
-	//UStaticMeshComponent* OurVisibleComponent;
-
-	//UPROPERTY(EditAnywhere)
-	//class UPhysicalMaterial* physMat;
 
 	void MoveForward(float Value);
 
@@ -77,6 +76,8 @@ public:
 	void StartBraking();
 
 	void StopBraking();
+
+	void AlterBoost();
 
 	FVector CurrentVelocity;
 

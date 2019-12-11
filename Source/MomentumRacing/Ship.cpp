@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "TimerManager.h"
 #include "Ship.h"
 
 #define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::White,text)
@@ -40,6 +41,7 @@ AShip::AShip()
 	RegularTopSpeed = 3500.0f;
 	BoostTopSpeed = 5000.0f;
 	MaxAngularVelocity = 120.0f;
+	Boost = 100.0f;
 }
 
 // Called when the game starts or when spawned
@@ -47,7 +49,7 @@ void AShip::BeginPlay()
 {
 	Super::BeginPlay();	
 
-	//OurVisibleComponent->SetMaterial(0, physMat);
+	GetWorld()->GetTimerManager().SetTimer(BoostHandle, this, &AShip::AlterBoost, 0.25f, true);
 }
 
 // Called every frame
@@ -55,7 +57,7 @@ void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	if (IsBoost)
+	if (IsBoost && Boost >= 10.0f)
 	{
 		if (Mesh->GetPhysicsLinearVelocity().Size() < BoostTopSpeed) {
 			const FVector Rotation = Mesh->GetComponentRotation().Vector();
@@ -120,5 +122,28 @@ void AShip::StartBraking()
 void AShip::StopBraking()
 {
 	IsBrake = false;
+}
+
+void AShip::AlterBoost()
+{
+	if (IsBoost)
+	{
+		if (Boost > 10.0f)
+		{
+			Boost -= 10.0f;
+		}
+	}
+	else
+	{
+		if (Boost >= 100.0f)
+		{
+			Boost = 100.0f;
+		}
+		else
+		{
+			Boost += 1.0f;
+		}
+	}
+	print("Boost: " + FString::FromInt(Boost));
 }
 
