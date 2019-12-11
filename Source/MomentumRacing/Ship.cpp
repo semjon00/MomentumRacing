@@ -128,13 +128,28 @@ void AShip::AlterBoost()
 {
 	if (IsBoost)
 	{
-		Boost -= 10.0f;
-		Boost = max(Boost, 0.0f);
+		if (Boost > 0.0f)
+		{
+			if (Boost >= 10.0f)
+			{
+				Boost -= 10.0f;
+			}
+			if (Boost < 10.0f)
+			{
+				Boost = 0.0f;
+			}
+		}
 	}
 	else
 	{
-		Boost += 1.0f;
-		Boost = min(Boost, 100.0f);
+		if (Boost >= 100.0f)
+		{
+			Boost = 100.0f;
+		}
+		else
+		{
+			Boost += 1.0f;
+		}
 	}
 }
 
