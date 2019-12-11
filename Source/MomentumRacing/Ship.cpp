@@ -130,7 +130,7 @@ void AShip::AlterBoost()
 	{
 		if (Boost > 0.0f)
 		{
-			if (Boost > 10.0f)
+			if (Boost >= 10.0f)
 			{
 				Boost -= 10.0f;
 			}
