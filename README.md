@@ -9,4 +9,4 @@ Developed with Unreal Engine 4
 
 # Running
 
-Open the project with Unreal Engine editor. If the `Maps/MMTest` isn't opened by default, open it and press **Play**.
+Open the project with Unreal Engine editor. If the `Maps/DevMap` isn't opened by default, open it and press **Play**.
