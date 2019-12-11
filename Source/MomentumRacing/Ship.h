@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
 #include "GameFramework/Pawn.h"
 #include "Ship.generated.h"
 
@@ -55,18 +54,9 @@ public:
 
 	FTimerHandle BoostHandle;
 
-	UFUNCTION(BlueprintCallable)
-	void SetHUDWidget(TSubclassOf<UUserWidget> HUDWidgetClass);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<UUserWidget> HUDWidgetClass;
-
-	UPROPERTY()
-	UUserWidget* CurrentWidget;
 
 public:	
 	// Called every frame
