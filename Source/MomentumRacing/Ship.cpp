@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Ship.h"
 #include "MomentumRacing.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/CollisionProfile.h"
@@ -9,7 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "TimerManager.h"
-#include "Ship.h"
+
 
 #define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::White,text)
 
@@ -35,11 +35,11 @@ AShip::AShip()
 	Mesh->SetSimulatePhysics(true);
 
 	TurnTorque = 60000000.0f;
-	AccelerationForce = 550000.0f;
+	AccelerationForce = 1000111.0f;
 	BoostForce = 1.6 * AccelerationForce;
 	BrakeForce = AccelerationForce;
-	RegularTopSpeed = 3500.0f;
-	BoostTopSpeed = 5000.0f;
+	RegularTopSpeed = 5000.0f;
+	BoostTopSpeed = 7500.0f;
 	MaxAngularVelocity = 120.0f;
 	Boost = 100.0f;
 }
