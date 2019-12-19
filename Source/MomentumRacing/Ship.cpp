@@ -9,7 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "TimerManager.h"
-
+#include <algorithm>
 
 #define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::White,text)
 
@@ -34,12 +34,12 @@ AShip::AShip()
 	Mesh->SetNotifyRigidBodyCollision(true);
 	Mesh->SetSimulatePhysics(true);
 
-	TurnTorque = 60000000.0f;
+	TurnTorque = 91001000.0f;
 	AccelerationForce = 1000111.0f;
 	BoostForce = 1.6 * AccelerationForce;
 	BrakeForce = AccelerationForce;
 	RegularTopSpeed = 5000.0f;
-	BoostTopSpeed = 7500.0f;
+	BoostTopSpeed =  10000.0f;
 	MaxAngularVelocity = 120.0f;
 	Boost = 100.0f;
 }
@@ -97,7 +97,7 @@ void AShip::MoveForward(float Value)
 
 void AShip::MoveRight(float Value)
 {
-	if (Mesh->GetPhysicsAngularVelocityInDegrees().Size() < 120.0f) {
+	if (Mesh->GetPhysicsAngularVelocityInDegrees().Size() < 180.0f) {
 		Value = FMath::Clamp(Value, -1.0f, 1.0f);
 		const FVector Torque = FVector(0.0f, 0.0f, Value * TurnTorque);
 		Mesh->AddTorqueInRadians(Torque);
@@ -126,31 +126,15 @@ void AShip::StopBraking()
 
 void AShip::AlterBoost()
 {
+	Boost += 1.0f;
 	if (IsBoost)
 	{
-		if (Boost > 0.0f)
-		{
-			if (Boost >= 10.0f)
-			{
-				Boost -= 10.0f;
-			}
-			if (Boost < 10.0f)
-			{
-				Boost = 0.0f;
-			}
-		}
+		Boost -= 8.0f;
 	}
-	else
-	{
-		if (Boost >= 100.0f)
-		{
-			Boost = 100.0f;
-		}
-		else
-		{
-			Boost += 1.0f;
-		}
-	}
+	if (Boost < 0.0f)
+		Boost = 0.0f;
+	if (Boost > 100.0f)
+		Boost = 100.0f;
 }
 
 float AShip::GetBoost()
