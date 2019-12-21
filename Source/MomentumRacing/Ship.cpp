@@ -34,8 +34,8 @@ AShip::AShip()
 	Mesh->SetNotifyRigidBodyCollision(true);
 	Mesh->SetSimulatePhysics(true);
 
-	TurnTorque = 91001000.0f;
-	AccelerationForce = 1000111.0f;
+	TurnTorque = 40000000.0f;
+	AccelerationForce = 800000.0f;
 	BoostForce = 1.6 * AccelerationForce;
 	BrakeForce = AccelerationForce;
 	RegularTopSpeed = 5000.0f;
