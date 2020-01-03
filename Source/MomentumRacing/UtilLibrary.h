@@ -14,6 +14,6 @@ class MOMENTUMRACING_API UUtilLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
-	UFUNCTION(BlueprintPure, Category="Utilities/Array")
+	UFUNCTION(BlueprintPure, Category="Utilities|Array")
 	static float SumArray(TArray<float> arr);
 };
