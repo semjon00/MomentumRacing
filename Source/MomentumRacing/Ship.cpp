@@ -72,7 +72,8 @@ void AShip::Tick(float DeltaTime)
 	{
 		const FVector Speed = Mesh->GetPhysicsLinearVelocity();
 		const FVector Force = -Speed * BrakeForce / Speed.Size();
-		Mesh->AddForce(Force);
+		const FVector ModifiedBrakeForce = FVector(Force.X, Force.Y, 0.0f);
+		Mesh->AddForce(ModifiedBrakeForce);
 	}
 
 	Mesh->AddForce(FVector(0.0f, 0.0f, -Downforce));
