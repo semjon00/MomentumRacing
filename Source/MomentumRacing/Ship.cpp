@@ -38,10 +38,11 @@ AShip::AShip()
 	AccelerationForce = 800000.0f;
 	BoostForce = 1.6 * AccelerationForce;
 	BrakeForce = AccelerationForce;
-	RegularTopSpeed = 5000.0f;
-	BoostTopSpeed =  10000.0f;
+	RegularTopSpeed = 4000.0f;
+	BoostTopSpeed = 6000.0f;
 	MaxAngularVelocity = 120.0f;
 	Boost = 100.0f;
+	Downforce = 0.3f * AccelerationForce;
 }
 
 // Called when the game starts or when spawned
@@ -62,7 +63,8 @@ void AShip::Tick(float DeltaTime)
 		if (Mesh->GetPhysicsLinearVelocity().Size() < BoostTopSpeed) {
 			const FVector Rotation = Mesh->GetComponentRotation().Vector();
 			FVector Force = BoostForce * Rotation;
-			Mesh->AddForce(Force);
+			const FVector ModifiedBoostForce = FVector(Force.X, Force.Y, FMath::Clamp(Force.Z, -Downforce, Downforce));
+			Mesh->AddForce(ModifiedBoostForce);
 		}
 	}
 
@@ -73,6 +75,7 @@ void AShip::Tick(float DeltaTime)
 		Mesh->AddForce(Force);
 	}
 
+	Mesh->AddForce(FVector(0.0f, 0.0f, -Downforce));
 }
 
 // Called to bind functionality to input
@@ -91,7 +94,8 @@ void AShip::MoveForward(float Value)
 	if (Mesh->GetPhysicsLinearVelocity().Size() < RegularTopSpeed) {
 		const FVector Rotation = Mesh->GetComponentRotation().Vector();
 		const FVector Force = Rotation * Value * AccelerationForce;
-		Mesh->AddForce(Force);
+		const FVector ModifiedForce = FVector(Force.X, Force.Y, FMath::Clamp(Force.Z, -Downforce * 0.8f, Downforce * 0.8f));
+		Mesh->AddForce(ModifiedForce);
 	}
 }
 

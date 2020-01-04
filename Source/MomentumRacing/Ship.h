@@ -41,6 +41,9 @@ public:
 	float BrakeForce;
 
 	UPROPERTY(EditAnywhere)
+	float Downforce;
+
+	UPROPERTY(EditAnywhere)
 	float RegularTopSpeed;
 
 	UPROPERTY(EditAnywhere)
