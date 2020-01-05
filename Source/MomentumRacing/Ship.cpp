@@ -36,13 +36,13 @@ AShip::AShip()
 
 	TurnTorque = 40000000.0f;
 	AccelerationForce = 800000.0f;
-	BoostForce = 1.6 * AccelerationForce;
+	BoostForce = 1.4 * AccelerationForce;
 	BrakeForce = AccelerationForce;
-	RegularTopSpeed = 4000.0f;
-	BoostTopSpeed = 6000.0f;
-	MaxAngularVelocity = 120.0f;
+	RegularTopSpeed = 7000.0f;
+	BoostTopSpeed = 11000.0f;
+	MaxAngularVelocity = 170.0f;
 	Boost = 100.0f;
-	Downforce = 0.3f * AccelerationForce;
+	Downforce = 0.4f * AccelerationForce;
 }
 
 // Called when the game starts or when spawned
@@ -50,7 +50,7 @@ void AShip::BeginPlay()
 {
 	Super::BeginPlay();	
 
-	GetWorld()->GetTimerManager().SetTimer(BoostHandle, this, &AShip::AlterBoost, 0.25f, true);
+	GetWorld()->GetTimerManager().SetTimer(BoostHandle, this, &AShip::AlterBoost, 0.20f, true);
 }
 
 // Called every frame
