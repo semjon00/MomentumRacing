@@ -5,8 +5,8 @@ Developed with Unreal Engine 4
 
 # Requirements
 
-* Unreal Engine 4 (version 23.1)
+* Windows 10 (64-bit)
 
 # Running
 
-Open the project with Unreal Engine editor. If the `Maps/DevMap` isn't opened by default, open it and press **Play**.
+Download the release, unpack it and start the executable.
