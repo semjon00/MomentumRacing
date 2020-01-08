@@ -1,7 +1,8 @@
 # MomentumRacing
 
 A simple arcade racing game.
-Developed with Unreal Engine 4
+Developed with Unreal Engine 4.
+https://courses.cs.ut.ee/2019/cg/fall/Main/Project-MomentumRacing
 
 # Requirements
 
